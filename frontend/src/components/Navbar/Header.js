@@ -59,6 +59,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function SearchAppBar({ isLoggedIn }) {
+
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -66,10 +67,13 @@ export default function SearchAppBar({ isLoggedIn }) {
     const [file, setFile] = React.useState("")
     const [description, setDescription] = React.useState("")
     const [cat, setcat] = React.useState('');
+    
+   
 
     const handleChange = (event) => {
         setcat(event.target.value);
     };
+    
 
     const submitForm = async (e) => {
         e.preventDefault();
@@ -84,8 +88,9 @@ export default function SearchAppBar({ isLoggedIn }) {
                 Authorization: 'Bearer ' + token
             })
         });
+    
     }
-
+   
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">

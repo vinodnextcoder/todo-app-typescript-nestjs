@@ -20,12 +20,16 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import { makeStyles } from "@material-ui/core/styles";
 import { MdModeEdit } from "react-icons/md";
+import io from 'socket.io-client';
+
+export const socket = io('http://localhost:3002');
+
 
 const useStyles = makeStyles({
-  custom: {
-    color: "#00EE00",
-    fontWeight: "bold"
-  }
+    custom: {
+        color: "#00EE00",
+        fontWeight: "bold"
+    }
 });
 
 const style = {
@@ -42,6 +46,7 @@ const style = {
 
 export default function TaskList({ setLoggedIn }) {
 
+
     const [tasks, setTasks] = React.useState([])
     const [open, setOpen] = React.useState(false);
 
@@ -50,6 +55,10 @@ export default function TaskList({ setLoggedIn }) {
 
 
     const navigate = useNavigate();
+    const addMatch = React.useCallback(
+    
+        (task) => setTasks([task,...tasks]),
+    );
     React.useEffect(() => {
         async function fetchData() {
             try {
@@ -66,6 +75,15 @@ export default function TaskList({ setLoggedIn }) {
         }
         fetchData();
     }, [navigate, setLoggedIn]);
+
+    React.useEffect(() => {
+        socket.on('newMatch', addMatch);
+        return () => {
+            socket.off('newMatch', addMatch);
+        };
+    }, [addMatch, socket]);
+
+
     const [titleName, settitle] = React.useState({
         title: "",
         id: "",
@@ -112,8 +130,6 @@ export default function TaskList({ setLoggedIn }) {
         });
 
         setTasks(data)
-
-
     }
     const classes = useStyles();
     return (
@@ -156,7 +172,7 @@ export default function TaskList({ setLoggedIn }) {
                                 <TextField
                                     margin="normal"
                                     required
-                                    fullWidth id="description"  name="description"
+                                    fullWidth id="description" name="description"
                                     autoFocus
                                     placeholder={titleName.description}
                                     onChange={(e) => setTitle(titleName.description)}
@@ -192,17 +208,17 @@ export default function TaskList({ setLoggedIn }) {
                         <CardActionArea >
                             <Card sx={{ display: 'flex' }}>
                                 <CardContent sx={{ flex: 1 }}>
-                                <MdModeEdit  id={task._id} alt={task.title} name={task.description} cat={task.cat} onClick={handleClick} />  
-                                    <Typography  id="outlined-helperText" variant="h6" className={classes.custom} component="div"  color="text.secondary">
+                                    <MdModeEdit id={task._id} alt={task.title} name={task.description} cat={task.cat} onClick={handleClick} />
+                                    <Typography id="outlined-helperText" variant="h6" className={classes.custom} component="div" color="text.secondary">
                                         {task.title}
                                     </Typography>
-                                    <Typography  variant="subtitle1" color="text.primary">
+                                    <Typography variant="subtitle1" color="text.primary">
                                         {task.description}
                                     </Typography>
                                     <Typography variant="subtitle1" color="text.secondary">
                                         {task.cat}
                                     </Typography>
-                                    </CardContent>
+                                </CardContent>
                                 <CardMedia>
                                     <Button variant="contained" href={`http://127.0.0.1:3002/${task.filename}`} rel="noopener noreferrer" target='_blank'>Download</Button>
 

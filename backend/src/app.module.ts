@@ -17,6 +17,7 @@ import { UserController } from './controller/user.controller';
 import { Task, TaskSchema } from './model/task.schema';
 import { User, UserSchema } from './model/user.schema';
 import { isAuthenticated } from './app.middleware';
+import { EventsGateway } from './events/event.gateway'
 
 @Module({
   imports: [
@@ -43,7 +44,7 @@ import { isAuthenticated } from './app.middleware';
   ],
  
 controllers: [AppController, TaskController, UserController],
-providers: [AppService, taskService, UserService,Handler],
+providers: [AppService, taskService, UserService,Handler,EventsGateway],
 })
 
 export class AppModule {

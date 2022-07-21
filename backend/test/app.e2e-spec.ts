@@ -56,6 +56,5 @@ describe('AppController (e2e)', () => {
       .field('description', 'test')
       .set({ 'authorization': "Bearer "+token })
       expect(logi.body.status.code).toEqual(1000);
-      // token = logi.body.data.token;
   });
 });

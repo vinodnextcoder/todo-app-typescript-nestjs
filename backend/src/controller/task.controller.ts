@@ -34,8 +34,9 @@ export class TaskController {
     }
 
     @Get()
-    async read(@Query() id): Promise<Object> {
-        return await this.taskService.readtask(id);
+    async read( @Req() request,@Query() id): Promise<Object> {
+        let createdBy=request.user._id;
+        return await this.taskService.readtask(id,createdBy);
     }
 
 
