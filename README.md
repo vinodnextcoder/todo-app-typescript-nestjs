@@ -29,6 +29,7 @@ $ cd backend
 $ npm install
 $ npm start
 ```
+This will run http://localhost:3002
 
 
 ## Frontend
@@ -37,6 +38,9 @@ $ cd frontend
 $ npm install
 $ npm start
 ```
+This will run http://localhost:3000
+
+
 
 
 
