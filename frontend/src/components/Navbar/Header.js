@@ -179,7 +179,7 @@ export default function SearchAppBar({ isLoggedIn }) {
                                                     variant="contained"
                                                     sx={{ mt: 3, mb: 2 }}
                                                 >
-                                                    Update task
+                                                    Create Task
                                                 </Button>
                                             </Box>
                                         </Typography>

@@ -194,7 +194,7 @@ export default function TaskList({ setLoggedIn }) {
                                     variant="contained"
                                     sx={{ mt: 3, mb: 2 }}
                                 >
-                                    Upload
+                                    Update task
                                 </Button>
                             </Box>
                         </Typography>
